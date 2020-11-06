@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, DateInput
-#from allauth.account.forms import SignupForm
+
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile, Piece
 from django.contrib.auth.models import User

@@ -26,6 +26,9 @@ def InscriptionClient(request):
         if form.is_valid():
             #permet de ne pas enregistrer l'instance dans la base de donnée
             user = form.save(commit=False)
+            nom
+
+
             user.is_active = False
             user.save()
 
