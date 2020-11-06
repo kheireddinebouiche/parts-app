@@ -110,6 +110,9 @@ def InscriptionVendeur(request):
         }
     return render(request, 'FrontPanel/inscription-vendeur.html',context)
 
+def user_profile(request):
+    return render(request, 'FrontPanel/profile.html')
+
 #partie traitement du backend
 def viewAdminPanel(request):
     return render(request, 'AdminPanel/dashboard.html')
