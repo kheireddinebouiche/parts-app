@@ -1,0 +1,96 @@
+
+{% extends 'FrontPanel/base.html' %}
+{% load static %}
+
+
+  {% block content %}
+  <div class="container my-5" >
+
+
+    <!--Section: Content-->
+    <section class="text-center dark-grey-text" style="margin-top: 120px;">
+  
+      <!-- Section heading -->
+      <h3 class="font-weight-bold pb-2 mb-4">Our pricing plans</h3>
+      <!-- Section description -->
+      <p class="text-muted w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam
+        eum porro a pariatur veniam.</p>
+  
+      <!-- Grid row -->
+      <div class="row">
+  
+        <!-- Grid column -->
+        <div class="col-lg-4 col-md-12 mb-4">
+  
+          <!-- Card -->
+          <div class="card">
+  
+            <!-- Content -->
+            <div class="card-body">
+  
+              <!-- Offer -->
+              <h5 class="mb-4">Client</h5>
+              <div class="d-flex justify-content-center">
+                <div class="card-circle d-flex justify-content-center align-items-center">
+                  <i class="fas fa-home indigo-text"></i>
+                </div>
+              </div>
+  
+              <!--Price -->
+              <h2 class="font-weight-bold my-4">Gratuit</h2>
+              <p class="grey-text">Incrivez-vous pour pouvoir bénificier de toutes les options d'achat et de commande.</p>
+              <a href="{% url 'app_parts:InscriptionClient' %}" class="btn btn-indigo btn-rounded">Commander maintenant</a>
+  
+            </div>
+            <!-- Content -->
+  
+          </div>
+          <!-- Card -->
+  
+        </div>
+        <!-- Grid column -->
+  
+        <!-- Grid column -->
+        <div class="col-lg-4 col-md-6 mb-4">
+  
+          <!-- Card -->
+          <div class="card indigo">
+  
+            <!-- Content -->
+            <div class="card-body white-text">
+  
+              <!-- Offer -->
+              <h5 class="mb-4">Vendeur</h5>
+              <div class="d-flex justify-content-center">
+                <div class="card-circle d-flex justify-content-center align-items-center">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+  
+              <!--Price -->
+              <h2 class="font-weight-bold my-4">1499 DA</h2>
+              <p>Acheter cette offre si vous voullai avoir votre magasin en ligne.</p>
+              <a href="{% url 'app_parts:InscriptionVendeur' %}" class="btn btn-outline-white btn-rounded">Commander maintenant</a>
+  
+            </div>
+            <!-- Content -->
+  
+          </div>
+          <!-- Card -->
+  
+        </div>
+        <!-- Grid column -->
+  
+      
+  
+      </div>
+      <!-- Grid row -->
+  
+    </section>
+    <!--Section: Content-->
+  
+  
+  </div>
+
+  {% endblock content%}
