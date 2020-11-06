@@ -7,21 +7,42 @@ from django.contrib.auth.models import User
 
 
 class SignUpForm_vendeur(UserCreationForm):
-    email = forms.EmailField(max_length=100)
-    organisation = forms.CharField(max_length=100,  label="Renseignez le nom de votre organisation")
-    adresse_siege = forms.CharField(max_length=400, label="L'adresse de votre siége social")
-    nis = forms.CharField(max_length=100,  label="N° Identification Fiscal")
-    nif = forms.CharField(max_length=100,  label="N° Identification Social")
+    
+    organisation = forms.CharField(max_length=100,  label="Renseignez le nom de votre organisation", widget=forms.TextInput(attrs={'type':'text', 'class': 'form-control'}))
+    adresse_siege = forms.CharField(max_length=400, label="L'adresse de votre siége social", widget=forms.TextInput(attrs={'type':'text', 'class': 'form-control'}))
+    nis = forms.CharField(max_length=100,  label="N° Identification Fiscal", widget=forms.TextInput(attrs={'type':'text', 'class': 'form-control'}))
+    nif = forms.CharField(max_length=100,  label="N° Identification Social", widget=forms.TextInput(attrs={'type':'text', 'class': 'form-control'}))
 
     class Meta:
         model = User
         fields = ('organisation','adresse_siege','nis','nif', 'username', 'first_name', 'last_name','email')
 
+        widgets= {
+            'username' : forms.TextInput(attrs={'type':'text', 'class': 'form-control'}),
+            'first_name' : forms.TextInput(attrs={'type':'text', 'class': 'form-control'}),
+            'last_name' : forms.TextInput(attrs={'type':'text', 'class': 'form-control'}),
+            'email' : forms.EmailInput(attrs={'type':'email', 'class': 'form-control'}),
+ 
+           
+    
+           
+        }
+
+
 
 class SignUpForm_client(UserCreationForm):
-    email = forms.EmailField(max_length=100, help_text='Required')
+    
    
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
 
+        widgets= {
+            'username' : forms.TextInput(attrs={'type':'text', 'class': 'form-control'}),
+            'first_name' : forms.TextInput(attrs={'type':'text', 'class': 'form-control'}),
+            'last_name' : forms.TextInput(attrs={'type':'text', 'class': 'form-control'}),
+            'email' : forms.EmailInput(attrs={'type':'email', 'class': 'form-control'}),
+           
+        }
+            
+        

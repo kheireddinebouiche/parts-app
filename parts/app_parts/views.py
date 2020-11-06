@@ -71,7 +71,41 @@ def activate_account(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 def InscriptionVendeur(request):
-    return render(request, 'FrontPanel/inscription-vendeur.html')
+    form = SignUpForm_vendeur()
+    if request.method == 'POST':
+        form = SignUpForm_vendeur(request.POST)
+        if form.is_valid():
+            #permet de ne pas enregistrer l'instance dans la base de donnée
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+
+            #permet d'enregistrer le profile de l'utilisateur
+            user = form.save()
+            user.refresh_from_db()
+            
+            user.profile.is_vendeur = True
+        
+            user.save()
+
+            current_site = get_current_site(request)
+            email_subject = "Lien d'activation de votre compte entreprise"
+            message = render_to_string('FrontPanel/activate_account.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(email_subject, message, to=[to_email])
+            email.send()
+            return render(request, 'FrontPanel/email_sent.html')
+
+    else:    
+        context = {
+            'form' : form,
+        }
+    return render(request, 'FrontPanel/inscription-vendeur.html',context)
 
 #partie traitement du backend
 def viewAdminPanel(request):

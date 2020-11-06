@@ -1,0 +1,36 @@
+{% extends 'FrontPanel/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="container " style="margin-top:5em; width: 600px;">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title h3 text-center">Formulaire d'inscription vendeur
+
+            </div>
+            <p class="text-center"><small >Formulaire de création de compte client, il vous servira afin de mettre en place votre boutique de vente en ligne.</small></p>
+            <form method="POST" class="form-detail">
+                {% csrf_token %}
+
+                {% for field in form %}
+
+                <p>
+                    {{field.label_tag}}<br>
+                    {{field}}
+
+                    {% if field.help_text %}
+                     <small style="color: grey;">{{field.help_text}}</small>
+                     {% endif %}
+                </p>
+               {% endfor %}
+               <center><input type="submit" class="btn btn-primary " value="Enregistrer"></center> 
+             </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
