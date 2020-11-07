@@ -75,16 +75,30 @@ class FamillePiece(models.Model):
         return self.designation
 
 
+
 class Piece(models.Model):
+    num_serie = models.CharField(max_length=100, null=True, blank=True)
     designation = models.CharField(max_length=200, null=True, blank=True)
     prix = models.IntegerField(null=True, blank=True)
     marque = models.ForeignKey(MarquePiece, on_delete=models.DO_NOTHING)
     famille = models.ForeignKey(FamillePiece, on_delete=models.DO_NOTHING)
     voiture = models.ForeignKey(Voiture, on_delete=models.DO_NOTHING)
     banniere = models.ImageField(null=True, blank=True)
+    slug = models.SlugField(max_length=100, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.num_serie)
+        super(Piece, self).save(*args, **kwargs)
+    
+    def get_parts_details(self):
+        return reverse("app_parts:DetailsPiece", kwargs={
+            'slug': self.slug
+        })
 
     def __str__(self):
         return self.designation
+
+
 
 
 

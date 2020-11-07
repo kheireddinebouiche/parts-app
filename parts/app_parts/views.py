@@ -9,10 +9,12 @@ from django.template.loader import render_to_string
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 
 
-#Parite traitement du frontend
+
+#Partie traitement du frontend
 def homView(request):
     return render(request,'FrontPanel/landing-page.html')
 
@@ -26,7 +28,7 @@ def InscriptionClient(request):
         if form.is_valid():
             #permet de ne pas enregistrer l'instance dans la base de donnée
             user = form.save(commit=False)
-            nom
+          
 
 
             user.is_active = False
@@ -110,11 +112,23 @@ def InscriptionVendeur(request):
         }
     return render(request, 'FrontPanel/inscription-vendeur.html',context)
 
+
+@login_required
 def user_profile(request):
     return render(request, 'FrontPanel/profile.html')
 
+def DetailsPiece(request):
+    return render(request,'FrontPanel/details-piece.html')
+
 #partie traitement du backend
+@login_required
 def viewAdminPanel(request):
     return render(request, 'AdminPanel/dashboard.html')
+
+
+@login_required
+def CreerPiece(request):
+    return render(request,'AdminPanel/creer-piece.html')
+
 
 
