@@ -130,5 +130,9 @@ def viewAdminPanel(request):
 def CreerPiece(request):
     return render(request,'AdminPanel/creer-piece.html')
 
+@login_required
+def OrderPiece(request):
+    return render(request,'order-piece.html')
+
 
 
