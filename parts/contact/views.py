@@ -3,6 +3,7 @@ from .forms import ContactForm
 from .models import Contact
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from django.contrib import messages
 
 # Create your views here.
 
@@ -27,10 +28,12 @@ def ShowContact(request):
             )
 
             cntc.save()
+            messages.success(request,'Votre message a été bien envoyer')
             return redirect('contact:ShowContact')
 
         else:
-            return HttpResponse('Erreur')
+            messages.warning(request,'Une est survenu')
+            return redirect('contact:ShowContact')
             
         
     context = {
