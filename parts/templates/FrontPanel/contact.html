@@ -7,7 +7,7 @@
 
  
     <!--Section: Content-->
-    <section class="contact-section dark-grey-text mb-5">
+    <section class="contact-section dark-grey-text mb-5" >
       
       <style>
       	.contact-section .form .btn-floating {
@@ -19,39 +19,37 @@
       </style>
 
       <!-- Form with header -->
-      <div class="card">
+      <div class="card" >
 
         <!-- Grid row -->
-        <div class="row">
+        <div class="row" height: 500px;>
 
           <!-- Grid column -->
-          <div class="col-lg-8">
+          <div class="col-lg-7">
 
             <div class="card-body form">
 
               <!-- Header -->
               <h3 class="font-weight-bold dark-grey-text mt-4"><i class="fas fa-envelope pr-2 mr-1"></i>Ecrivez Nous:</h3>
-              <div class="col-lg-4">
-              <form method="POST">
+            
+              <form method="POST" class="form-detail">
                 {% csrf_token %}
                 
                     {{form}}  
-
-
                
                 <button type="submit" class="btn btn-primary"> ENVOYER </button>          
                 </form>
-            </div>
+            
               </div>
               <!-- Grid row -->
 
             </div>
 
-          </div>
+         
           <!-- Grid column -->
 
           <!-- Grid column -->
-          <div class="col-lg-4">
+          <div class="col-lg-5">
 
             <div class="card-body contact text-center h-100 white-text">
 
