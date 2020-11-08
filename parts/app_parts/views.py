@@ -116,15 +116,6 @@ def InscriptionVendeur(request):
 def ShowCatalogue(request):
     return render(request,'FronPanel/catalogue.html')
 
-def ShowContact(request):
-    form = ContactForm()
-
-
-    context = {
-        'form' : form,
-    }
-
-    return render(request,'FrontPanel/contact.html', context)
 
 def ShowTerms(request):
     return render(request,'FrontPanel/terms.html')
