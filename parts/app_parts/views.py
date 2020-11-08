@@ -120,6 +120,9 @@ def ShowCatalogue(request):
 def ShowTerms(request):
     return render(request,'FrontPanel/terms.html')
 
+def AboutUs(request):
+    return render(request,'FrontPanel/about-us.html')
+
 
 
 @login_required
