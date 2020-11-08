@@ -1,6 +1,6 @@
 from django.urls import path,include
 from .views import viewAdminPanel, homView, inscription, InscriptionClient, InscriptionVendeur,activate_account,user_profile,CreerPiece
-from .views import DetailsPiece
+from .views import DetailsPiece,ShowCatalogue
 app_name="app_parts"
 
 
@@ -12,6 +12,7 @@ urlpatterns = [
     path('Inscription/Inscription_vendeur/', InscriptionVendeur, name="InscriptionVendeur"),
     path('Mon-profile/',user_profile,name="user_profile"),
     path('Details-parts/',DetailsPiece,name="DetailsPiece"),
+    path('Notre-catalogue/',ShowCatalogue,name="ShowCatalogue"),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$' ,activate_account, name='activate'),
 
 

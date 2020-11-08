@@ -114,7 +114,7 @@ def InscriptionVendeur(request):
     return render(request, 'FrontPanel/inscription-vendeur.html',context)
 
 def ShowCatalogue(request):
-    return render(request,'FronPanel/catalogue.html')
+    return render(request,'FrontPanel/catalogue.html')
 
 
 def ShowTerms(request):
