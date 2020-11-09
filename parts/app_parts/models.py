@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.db.models.signals import post_save
 
 
+
 MOTORISATION =(
     ('e', 'Essence'),
     ('d', 'Diesel')
@@ -26,6 +27,7 @@ class Profile(models.Model):
     nis = models.CharField(max_length=30, null=True, blank=True)
     banniere = models.ImageField(null=True, blank=True)
     slug = models.SlugField(max_length=100, null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
 
     note = models.BooleanField(default=False)
 
