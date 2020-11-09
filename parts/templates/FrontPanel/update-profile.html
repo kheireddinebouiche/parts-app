@@ -37,8 +37,8 @@
                 {% csrf_token %}
                 <div class="card-body">
                     <h3 class="card-title text-center">Editer votre profile</h3>                
-                    {{user_form|crispy}}
-                    {{profile_form|crispy}}
+                    {{user_form}}
+                    {{profile_form}}
                     </div>                          
                 <div class="card-footer text-right" >
                     <button type="submit" class="btn btn-primary">Mettre a jour mon profile</button>
