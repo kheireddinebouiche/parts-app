@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.shortcuts import redirect
+from django.contrib import messages
 
 
 
@@ -56,7 +58,7 @@ def InscriptionClient(request):
             email.send()
             return render(request, 'FrontPanel/email_sent.html')
         else:
-            messages.error(request,'Une erreur est survenu, veuillez réessayer')
+            messages.warning(request,'Une erreur est survenu, veuillez réessayer')
             return redirect('app_parts:InscriptionClient')
 
     else:    
@@ -97,7 +99,6 @@ def InscriptionVendeur(request):
             user.profile.adresse_siege = form.cleaned_data.get('adresse_siege')
             user.profile.phone_number = form.cleaned_data.get('phone_number')
             user.profile.nis =  form.cleaned_data.get('nis')
-            user.profile.nif =  form.cleaned_data.get('nif')      
             user.profile.is_vendeur = True
         
             user.save()
