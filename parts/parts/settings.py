@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'app_parts',
     'contact',
     'marketing',
-    'crispy_forms',
+    
     
 ]
 
