@@ -10,7 +10,7 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-
+from django.db import transaction
 
 
 
@@ -22,6 +22,7 @@ def homView(request):
 def inscription(request):
     return render(request,'FrontPanel/inscription.html')
 
+@transaction.atomic
 def InscriptionClient(request):
     form = SignUpForm_client()
     if request.method == 'POST':
@@ -29,20 +30,19 @@ def InscriptionClient(request):
         if form.is_valid():
             #permet de ne pas enregistrer l'instance dans la base de donnée
             user = form.save(commit=False)
-          
-
-
             user.is_active = False
             user.save()
 
             #permet d'enregistrer le profile de l'utilisateur
             user = form.save()
             user.refresh_from_db()
-            
+            user.profile.adresse = form.cleaned_data.get('adresse')
+            user.profile.phone_number = form.cleaned_data.get('phone_number')
             user.profile.is_client = True
         
             user.save()
 
+            #Envoie d'un email d'activation de compte
             current_site = get_current_site(request)
             email_subject = "Lien d'activation de votre compte entreprise"
             message = render_to_string('FrontPanel/activate_account.html', {
@@ -55,6 +55,9 @@ def InscriptionClient(request):
             email = EmailMessage(email_subject, message, to=[to_email])
             email.send()
             return render(request, 'FrontPanel/email_sent.html')
+        else:
+            messages.error(request,'Une erreur est survenu, veuillez réessayer')
+            return redirect('app_parts:InscriptionClient')
 
     else:    
         context = {
@@ -76,6 +79,7 @@ def activate_account(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 
+@transaction.atomic
 def InscriptionVendeur(request):
     form = SignUpForm_vendeur()
     if request.method == 'POST':
@@ -89,11 +93,16 @@ def InscriptionVendeur(request):
             #permet d'enregistrer le profile de l'utilisateur
             user = form.save()
             user.refresh_from_db()
-            
+            user.profile.organisation = form.cleaned_data.get('organisation')
+            user.profile.adresse_siege = form.cleaned_data.get('adresse_siege')
+            user.profile.phone_number = form.cleaned_data.get('phone_number')
+            user.profile.nis =  form.cleaned_data.get('nis')
+            user.profile.nif =  form.cleaned_data.get('nif')      
             user.profile.is_vendeur = True
         
             user.save()
 
+            #Envoie d'un email d'activation de compte
             current_site = get_current_site(request)
             email_subject = "Lien d'activation de votre compte entreprise"
             message = render_to_string('FrontPanel/activate_account.html', {
@@ -122,7 +131,6 @@ def ShowTerms(request):
 
 def AboutUs(request):
     return render(request,'FrontPanel/about-us.html')
-
 
 
 @login_required
