@@ -13,7 +13,19 @@ MOTORISATION =(
     ('d', 'Diesel')
 )
 
+def increment_profile_id_number():
+        dernier_nomber = Profile.objects.all().order_by('id').last()
+        if not dernier_nomber:
+            return 'user-patrs/' + '1'
+
+        profile_id = dernier_nomber.profile_id
+        profile_order_nb = int(profile_id.split('user-parts/')[-1])
+        n_profiel_order_nb = profile_order_nb + 1
+        n_profile_order_id = 'user-parts/' + str(n_profile_order_nb)
+        return n_profile_order_id
+
 class Profile(models.Model):
+    profile_id = models.CharField(max_length=1000, default=increment_profile_id_number, null=True, blank=True)
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
     organisation = models.CharField(max_length=50, blank=True, null=True)
     phone_number = models.CharField(max_length= 13,blank=True, null=True)

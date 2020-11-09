@@ -47,10 +47,10 @@
     color: #0062cc;
 }
 .profile-edit-btn{
-    border: none;
+    border: 1;
     border-radius: 1.5rem;
-    width: 70%;
-    padding: 2%;
+    width: 114%;
+    padding: 4%;
     font-weight: 600;
     color: #6c757d;
     cursor: pointer;
@@ -126,7 +126,7 @@
                                     <p class="proile-rating">Membre depuis : <span>{{request.user.profile.created_at}}</span></p>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Votre profile</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
@@ -134,17 +134,38 @@
                             </ul>
                         </div>
                     </div>
+                    {% if request.user.profile.is_vendeur or request.user.is_staff %}
                     <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Modifier mon profile"/>
+                        <a href="{% url 'app_parts:update_profile_vendeur' %}"><input class="profile-edit-btn" name="btnAddMore" value="Modifier mon profile" /></a>
                     </div>
+                    {% elif request.user.profile.is_client  %}
+                    <div class="col-md-2">
+                        <a href="{% url 'app_parts:update_profile_client' %}"><input class="profile-edit-btn" name="btnAddMore" value="Modifier mon profile" /></a>
+                    </div>
+                    {% endif %}
+
+
+                    
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-work">
-                            <p>WORK LINK</p>
-                            <a href="">Website Link</a><br/>
-                            <a href="">Bootsnipp Profile</a><br/>
-                            <a href="">Bootply Profile</a>
+                            <p>Actions</p>
+                            {% if request.user.is_vendeur %}
+                            <a href="">Commandes</a><br/>
+                             {% elif request.user.profile.is_client %}
+                            <a href="">Mes commandes</a><br/>
+                            {% elif  request.user.profile.is_vendeur %}
+                            <a href="{% url 'app_parts:Dashboard' %}">Mon tableau de bord</a><br/>
+                            {% elif request.user.is_staff %}
+                            <a href="">Panneau de configuration</a><br/>          
+                            {% endif %}   
+                            {% if request.user.profile.is_vendeur or request.user.profile.is_client  %}
+                            <a href="">Archives</a><br/>
+                            {% endif %}
+                            {% if request.user.profile.is_client %}
+                            <a href="">Effectuer une commande</a>
+                            {% endif %}
                             <p>SKILLS</p>
                             <a href="">Web Designer</a><br/>
                             <a href="">Web Developer</a><br/>
@@ -158,42 +179,56 @@
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>User Id</label>
+                                                <label>Votre identifiant</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Kshiti123</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti Ghelani</p>
+                                                <p>{{request.user.profile.profile_id}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Email</label>
+                                                <label>Nom</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>kshitighelani@gmail.com</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Phone</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>123 456 7890</p>
+                                                <p>{{request.user.last_name}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Profession</label>
+                                                <label>Prénom</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
+                                                <p>{{request.user.first_name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Adresse E-mail</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{request.user.email}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Adresse </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                
+                                                {% if request.user.profile.is_client %}
+                                                <p>{{request.user.profile.adresse}}</p>
+                                                {% elif request.user.profile.is_vendeur %}
+                                                <p>{{request.user.profile.adresse_siege}}</p>
+                                                {% endif %}                    
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Numéro de téléphone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{request.user.profile.phone_number}}</p>
                                             </div>
                                         </div>
                             </div>

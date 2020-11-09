@@ -40,5 +40,37 @@ class SignUpForm_client(UserCreationForm):
             'email' : forms.EmailInput(attrs={'type':'email', 'class': 'form-control'}),
            
         }
-            
         
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+        widgets = {
+            'first_name' : forms.TextInput(attrs={'type':'text','class':'form-control'}),
+            'last_name' : forms.TextInput(attrs={'type':'text','class':'form-control'}),
+            'email' : forms.EmailInput(attrs={'type':'text','class':'form-control'}),
+        }
+
+class ProfileFormVendeur(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('organisation', 'phone_number','adresse_siege','nif','nis')
+        widgets = {
+            'organisation' : forms.TextInput(attrs={'type':'text','class':'form-control','placeholder':'Le nom de votre entreprise'}),
+            'phone_number' : forms.TextInput(attrs={'type':'text','class':'form-control','placeholder':'N° de téléphone'}),
+            'adresse_siege' : forms.TextInput(attrs={'type':'text','class':'form-control'}),
+            'nif' : forms.TextInput(attrs={'type':'text','class':'form-control','placeholder':'N° identification fiscal'}),
+            'nis' : forms.TextInput(attrs={'type':'text','class':'form-control','placeholder':'N° identification social'}),
+
+        }
+
+class ProfileFormClient(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('phone_number','adresse')
+        widgets = {
+            'phone_number' : forms.TextInput(attrs={'type':'text','class':'form-control','placeholder':'N° de téléphone'}),
+            'adresse' : forms.TextInput(attrs={'type':'text','class':'form-control'}),
+        
+        }
+       

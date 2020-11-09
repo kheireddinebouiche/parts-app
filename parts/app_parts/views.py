@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import SignUpForm_vendeur,SignUpForm_client
+from .forms import SignUpForm_vendeur,SignUpForm_client, ProfileFormVendeur,ProfileFormClient, UserForm
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage, send_mail, BadHeaderError
@@ -13,6 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_protect
+
 
 
 
@@ -80,6 +82,54 @@ def activate_account(request, uidb64, token):
         return render(request, 'success_activation.html')
     else:
         return HttpResponse('Activation link is invalid!')
+
+@login_required
+@transaction.atomic
+@csrf_protect
+def update_profile_vendeur(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileFormVendeur(request.POST, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, ('Votre profile a été mit a jour avec succées'))
+            return redirect('app_parts:update_profile_vendeur')
+        else:
+            messages.error(request, 'Please correct the error below')
+
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileFormVendeur(instance=request.user.profile)
+    return render(request, 'FrontPanel/update-profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+@login_required
+@transaction.atomic
+@csrf_protect
+def update_profile_client(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileFormClient(request.POST, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, ('Votre profile a été mit a jour avec succées'))
+            return redirect('app_parts:update_profile_client')
+        else:
+            messages.error(request, 'Please correct the error below')
+
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileFormClient(instance=request.user.profile)
+    return render(request, 'FrontPanel/update-profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
 
 @transaction.atomic
 def InscriptionVendeur(request):
