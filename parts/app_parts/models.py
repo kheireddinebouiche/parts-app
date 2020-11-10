@@ -73,8 +73,11 @@ class Voiture(models.Model):
     designation = models.CharField(max_length=200, null=True, blank=True)
     annee = models.IntegerField(null=True, blank=True)
     motorisation = models.CharField(max_length=1, choices=MOTORISATION, null=True, blank=True)
+    puissance = models.CharField(max_length=10,null=True, blank=True)
+    cylindré = models.CharField(max_length=10,null=True, blank=True)
     marque = models.ForeignKey(ConstructeurVoiture, on_delete=models.DO_NOTHING)
     banniere = models.ImageField(null=True, blank=True)
+    
     def __str__(self):
         return self.designation
 
