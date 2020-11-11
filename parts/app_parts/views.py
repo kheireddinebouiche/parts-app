@@ -97,7 +97,8 @@ def update_profile_vendeur(request):
             messages.success(request, ('Votre profile a été mit a jour avec succées'))
             return redirect('app_parts:update_profile_vendeur')
         else:
-            messages.error(request, 'Please correct the error below')
+            messages.error(request, 'Corriger les erreurs')
+            return redirect('app_parts:update_profile_vendeur')
 
     else:
         user_form = UserForm(instance=request.user)
