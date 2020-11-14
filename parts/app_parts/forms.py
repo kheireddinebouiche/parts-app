@@ -73,4 +73,17 @@ class ProfileFormClient(forms.ModelForm):
             'adresse' : forms.TextInput(attrs={'type':'text','class':'form-control'}),
         
         }
-       
+
+
+class CreerPieceForm(forms.ModelForm):
+    class Meta:
+        model = Piece
+        fields = ('num_serie','designation','prix','marque','famille','voiture')
+        widgets = {
+            'num_serie' : forms.TextInput(attrs={'type':'text','class':'form-control'}),
+            'designation' : forms.TextInput(attrs={'type':'text','class':'form-control'}),
+            'prix' : forms.TextInput(attrs={'type':'text','class':'form-control'}),
+            'marque' : forms.Select(attrs={'type':'text','class':'form-control'}),
+            'famille' : forms.Select(attrs={'type':'text','class':'form-control'}),
+            'voiture' : forms.SelectMultiple(attrs={'type':'text','class':'form-control'}),
+        }

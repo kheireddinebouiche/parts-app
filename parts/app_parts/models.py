@@ -94,26 +94,66 @@ class FamillePiece(models.Model):
 
 
 class Piece(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     num_serie = models.CharField(max_length=100, null=True, blank=True)
     designation = models.CharField(max_length=200, null=True, blank=True)
     prix = models.IntegerField(null=True, blank=True)
-    marque = models.ForeignKey(MarquePiece, on_delete=models.DO_NOTHING)
-    famille = models.ForeignKey(FamillePiece, on_delete=models.DO_NOTHING)
-    voiture = models.ForeignKey(Voiture, on_delete=models.DO_NOTHING)
+    marque = models.ForeignKey(MarquePiece, on_delete=models.CASCADE)
+    famille = models.ForeignKey(FamillePiece, on_delete=models.CASCADE)
+    voiture = models.ManyToManyField(Voiture)
     banniere = models.ImageField(null=True, blank=True)
+    archive = models.BooleanField(default=False, null=True, blank=True)
     slug = models.SlugField(max_length=100, null=True, blank=True)
+
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.num_serie)
         super(Piece, self).save(*args, **kwargs)
     
-    def get_parts_details(self):
+    def get_parts_details_client(self):
         return reverse("app_parts:DetailsPiece", kwargs={
+            'slug': self.slug
+        })
+
+    def get_parts_details_owner(self):
+        return reverse("app_parts:DetailsPieceOwner", kwargs={
             'slug': self.slug
         })
 
     def __str__(self):
         return self.designation
+
+
+
+def increment_bon_id_number():
+        dernier_nomber = BonReduction.objects.all().order_by('id').last()
+        if not dernier_nomber:
+            return 'Bon/' + '1'
+
+        id_bon = dernier_nomber.id_bon
+        id_bon_nb = int(id_bon.split('Bon/')[-1])
+        n_bon_order_nb = id_bon_nb + 1
+        n_bon_order_id = 'Bon/' + str(n_bon_order_nb)
+        return n_bon_order_id
+
+class BonReduction(models.Model):
+    id_bon = models.CharField(max_length=1000, default=increment_bon_id_number, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    piece = models.ForeignKey(Piece, on_delete=models.CASCADE)
+    date_debut = models.DateField()
+    date_fin = models.DateField()
+    taux = models.IntegerField(null=True,blank=True)
+    slug = models.SlugField(max_length=100, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.id_bon)
+        super(BonReduction, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.user.username
+
+    
+
 
 
 

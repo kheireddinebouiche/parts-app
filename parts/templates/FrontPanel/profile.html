@@ -155,8 +155,8 @@
                             <a href="">Commandes</a><br/>
                              {% elif request.user.profile.is_client %}
                             <a href="">Mes commandes</a><br/>
-                            {% elif  request.user.profile.is_vendeur %}
-                            <a href="{% url 'app_parts:Dashboard' %}">Mon tableau de bord</a><br/>
+                            {% elif  request.user.profile.is_vendeur or request.user.is_staff %}
+                            <a href="{% url 'app_parts:viewAdminPanel' %}">Mon tableau de bord</a><br/>
                             {% elif request.user.is_staff %}
                             <a href="">Panneau de configuration</a><br/>          
                             {% endif %}   

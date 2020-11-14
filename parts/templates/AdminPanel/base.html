@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+ {% include "AdminPanel/header.html" %}
+ <head>
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+<body>
+   {% include "AdminPanel/nav.html" %}
+
+   {% block content %}
+
+   {% endblock content %}
+
+   {% block extra_body %}
+   {% endblock %}
+
+   {% include "AdminPanel/footer.html" %}
+   {% include "AdminPanel/scripts.html" %}
+   
+</body>
+
+</html>
